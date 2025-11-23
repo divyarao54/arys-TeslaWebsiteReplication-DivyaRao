@@ -1,0 +1,254 @@
+/* * BASE STYLES & LAYOUT 
+ * Achieves the centered, minimalist look of the Tesla Sign-In page.
+ */
+
+body {
+    font-family: 'Inter', sans-serif; /* Use a modern, clean font */
+    background-color: #f7f7f7; /* Very light gray background */
+    margin: 0;
+    padding: 0;
+}
+
+/* Base style for both login and register pages */
+.login-page, .register-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px; /* Space for the top header/logo */
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* * HEADER / LOGO PLACEMENT 
+ * Updated to handle both existing login-hero-title and the new register-hero-title structure
+ */
+
+/* Style for the old login title text placeholder */
+.login-hero-title {
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    color: #171a20;
+}
+
+/* Style for the new register logo container */
+.register-hero-title {
+    position: absolute;
+    top: 25px;
+    left: 40px;
+}
+
+.nav-logo img {
+    width: 120px;
+}
+
+/* * LOGIN/REGISTER CONTAINER (The main center box) 
+ * Using generic styling for the main form wrapper
+ */
+
+.login-container, .register-container {
+    width: 100%;
+    max-width: 380px; /* Width similar to the reference image */
+    margin-top: 50px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Title for Login/Register Pages */
+.login-title, .register-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #171a20;
+    margin-bottom: 20px;
+    align-self: flex-start; /* Align title to the left */
+}
+
+/* * FORM GROUP & INPUTS 
+ * These styles apply to both login and register forms
+ */
+
+.login-form, .register-form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+/* Label styles apply to all labels in both forms */
+.email-label, .password-label, .register-name-label, .register-email-label, .register-password-label {
+    display: block;
+    text-align: left;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #5c5e62;
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+/* Input styles apply to all inputs in both forms */
+input[type="email"], 
+input[type="password"],
+input[type="text"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background-color: #f4f4f4; /* Light gray background */
+    box-shadow: none;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+input[type="email"]:focus, 
+input[type="password"]:focus,
+input[type="text"]:focus {
+    background-color: #fff;
+    border-color: #d0d0d0;
+    outline: none;
+}
+
+/* * PRIMARY BUTTON (Login/Register Button) 
+ * Using specific class names for the blue primary button
+ */
+
+.login-btn, .register-btn {
+    width: 100%;
+    padding: 12px 0;
+    margin-top: 15px;
+    background-color: #3b82f6; /* Light blue color from reference image */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+}
+
+.login-btn:hover, .register-btn:hover {
+    background-color: #2563eb;
+}
+
+.login-btn:disabled, .register-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* * ERROR MESSAGE 
+ */
+
+p {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* * SEPARATOR & SECONDARY LINKS 
+ */
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+    width: 100%;
+}
+
+.separator::before,
+.separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.separator:not(:empty)::before {
+    margin-right: .5em;
+}
+
+.separator:not(:empty)::after {
+    margin-left: .5em;
+}
+
+/* Link styled as the secondary "Create Account" button (Login Page) */
+.register-link {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    text-align: center;
+    background-color: #f4f4f4; /* Same as input background */
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.register-link:hover {
+    background-color: #e8e8e8;
+}
+
+/* Link styled as the secondary "Login here" button (Register Page) */
+.login-link {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    text-align: center;
+    background-color: #f4f4f4; /* Same as input background */
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.login-link:hover {
+    background-color: #e8e8e8;
+}
+
+
+/* * FOOTER (Optional - not in user's HTML, but good for completeness)
+ */
+
+.footer-links {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #5c5e62;
+}
+
+/* * MOBILE RESPONSIVENESS 
+ */
+
+@media (max-width: 600px) {
+    .login-hero-title, .register-hero-title {
+        left: 20px;
+    }
+
+    .login-container, .register-container {
+        padding: 0 20px;
+        margin-top: 20px;
+    }
+
+    .login-title, .register-title {
+        font-size: 2rem;
+    }
+}

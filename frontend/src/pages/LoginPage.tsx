@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login-register.css';
 import config from '../config';
 import { useAuth } from '../context/UserContext'; 
+import TeslaLogo from '../assets/tesla-logo-navbar.png'; 
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -36,7 +38,11 @@ const Login = () => {
 
     return (
         <div className="login-page">
-            <div className='login-hero-title'>Tesla</div>
+            <div className='login-hero-title'>
+                <div className="nav-logo">
+                    <img src={TeslaLogo} alt="Tesla Logo"/>
+                </div>
+            </div>
 
             <div className='login-container'>
                 <div className='login-title'>Sign in or Log in to your Account</div>

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login-register.css';
-import config from '../config'; 
+import config from '../config';
+import TeslaLogo from '../assets/tesla-logo-navbar.png'; 
+
 
 const Register = () => {
 
@@ -34,7 +36,11 @@ const Register = () => {
 
     return (
         <div className="register-page">
-            <div className='register-hero-title'>Tesla</div>
+            <div className='register-hero-title'>
+                <div className="nav-logo">
+                    <img src={TeslaLogo} alt="Tesla Logo"/>
+                </div>
+            </div>
 
             <div className="register-container">
             <div className="register-title">Register with us</div>
@@ -46,7 +52,7 @@ const Register = () => {
                     </div>
                     <div className="form-group">
                         <label className="register-email-label">Email:</label>
-                        <input id="register-email" type="email" value={email} required onChange={(e) => setEmail(e.target.value)} placeholder="enter email ID"/>
+                        <input id="register-email" type="email" value={email} required onChange={(e) => setEmail(e.target.value)} placeholder="Enter email ID"/>
                     </div>
                     <div className="form-group">
                         <label className="register-password-label">Password:</label>

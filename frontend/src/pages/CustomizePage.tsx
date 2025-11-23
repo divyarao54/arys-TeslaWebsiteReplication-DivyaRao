@@ -3,7 +3,6 @@ import React, { useState, useMemo } from 'react';
 import Navbar from '../components/navbar';
 
 // --- IMAGE IMPORTS ---
-// (Imports remain unchanged)
 import logo from "../assets/images/logo.svg";
 import exteriorImageDefault from "../assets/images/model-y-stealth-grey.jpg";
 import interiorImageDark from "../assets/images/model-y-interior-dark.jpg";
@@ -25,11 +24,16 @@ import buttonQuicksilver from "../assets/images/button-quicksilver.avif";
 import buttonDark from "../assets/images/button-dark.avif";
 import buttonLight from "../assets/images/button-light.avif";
 
-// Mapping the imported variables to a single object for easy configuration access
+import wheel1 from "../assets/images/ModelYPremium_88-wheel-1.jpg"
+import wheel2 from "../assets/images/ModelYPremium_88-wheel-2.jpg"
+
 const DYNAMIC_IMAGE_PATHS = {
     logo: logo,
     exteriorImageDefault: exteriorImageDefault,
     interiorImageDark: interiorImageDark,
+    interiorImageLight: interiorImageLight, // Fixed: This was missing previously
+    wheel1: wheel1,
+    wheel2: wheel2,
     
     // Exterior Colors
     modelYStealthGrey: modelYStealthGrey,
@@ -63,6 +67,7 @@ interface WheelOption {
     name: string;
     price: number;
     key: 'standard' | 'performance';
+    image: string; // Added image property
 }
 
 interface Accessory {
@@ -76,6 +81,8 @@ interface AccessoriesState {
     sunshade: boolean;
     liners: boolean;
 }
+
+type ViewKey = 'exterior' | 'interior' | 'wheels';
 
 // --- Configuration Data ---
 const BASE_PRICE: number = 47490;
@@ -96,12 +103,13 @@ const COLORS: CarOption[] = [
 
 const INTERIORS: CarOption[] = [
     { name: 'Dark (Black)', price: 0, hex: '#1f2937', buttonImage: DYNAMIC_IMAGE_PATHS.buttonDark, mainImage: DYNAMIC_IMAGE_PATHS.interiorImageDark },
-    { name: 'Light (White)', price: 1000, hex: '#f3f4f6', buttonImage: DYNAMIC_IMAGE_PATHS.buttonLight, mainImage: interiorImageLight },
+    { name: 'Light (White)', price: 1000, hex: '#f3f4f6', buttonImage: DYNAMIC_IMAGE_PATHS.buttonLight, mainImage: DYNAMIC_IMAGE_PATHS.interiorImageLight },
 ];
 
 const WHEELS: WheelOption[] = [
-    { name: 'Standard Wheels', price: 0, key: 'standard' },
-    { name: 'Performance Wheels', price: 2500, key: 'performance' },
+    // Added image paths for the wheel options
+    { name: 'Standard Wheels', price: 0, key: 'standard', image: DYNAMIC_IMAGE_PATHS.wheel1 },
+    { name: 'Performance Wheels', price: 2500, key: 'performance', image: DYNAMIC_IMAGE_PATHS.wheel2 },
 ];
 
 const ACCESSORIES: Accessory[] = [
@@ -122,7 +130,7 @@ const formatCurrency = (amount: number): string => {
 
 // --- Main App Component ---
 const CustomizePage = () => {
-    // State Initialization (unchanged)
+    // State Initialization
     const [exteriorColor, setExteriorColor] = useState<CarOption>(COLORS[0]);
     const [interiorColor, setInteriorColor] = useState<CarOption>(INTERIORS[0]);
     const [wheels, setWheels] = useState<WheelOption>(WHEELS[0]);
@@ -134,56 +142,78 @@ const CustomizePage = () => {
         liners: false,
     });
     
-    // Custom Modal State (unchanged)
+    // Custom Modal State
     const [showModal, setShowModal] = useState<boolean>(false);
 
     // --- NEW STATE FOR IMAGE TRANSITION ---
-    // 1. Controls the opacity (true = fading out/in, opacity 0)
     const [isFading, setIsFading] = useState<boolean>(false);
-    // 2. Tracks the view type
-    const [currentViewKey, setCurrentViewKey] = useState<'exterior' | 'interior'>('exterior');
+    // Updated type to include 'wheels'
+    const [currentViewKey, setCurrentViewKey] = useState<ViewKey>('exterior'); 
 
-    // Constants for the transition timing
-    const TRANSITION_DURATION_MS = 300; // Matches the CSS duration
+    const TRANSITION_DURATION_MS = 300; 
     
     // Function to calculate the correct source image based on current customization states
-    const getDisplayedSource = (viewKey: 'exterior' | 'interior', exterior: CarOption, interior: CarOption): string => {
-        return viewKey === 'exterior' ? exterior.mainImage : interior.mainImage;
+    const getDisplayedSource = (
+        viewKey: ViewKey, 
+        exterior: CarOption, 
+        interior: CarOption,
+        wheels: WheelOption
+    ): string => {
+        switch (viewKey) {
+            case 'exterior':
+                return exterior.mainImage;
+            case 'interior':
+                return interior.mainImage;
+            case 'wheels':
+                return wheels.image;
+            default:
+                // Fallback to exterior
+                return exterior.mainImage; 
+        }
     };
     
-    // State to hold the image source that is currently loaded in the <img> tag
-    // This allows the fade-out to occur on the OLD image before switching the src.
-    const [displayedImageSrc, setDisplayedImageSrc] = useState<string>(getDisplayedSource('exterior', COLORS[0], INTERIORS[0]));
+    // Initialize displayed image source with the correct initial state
+    const [displayedImageSrc, setDisplayedImageSrc] = useState<string>(
+        getDisplayedSource('exterior', COLORS[0], INTERIORS[0], WHEELS[0])
+    );
 
-    // --- NEW HANDLER FOR IMAGE TRANSITION ---
+    // --- NEW REFACTORED HANDLER FOR IMAGE TRANSITION ---
     const handleViewChange = (
-        isExterior: boolean, 
-        newExterior?: CarOption, 
-        newInterior?: CarOption
+        newKey: ViewKey,
+        options: {
+            newExterior?: CarOption,
+            newInterior?: CarOption,
+            newWheels?: WheelOption
+        } = {}
     ) => {
-        // Only trigger transition if the view or customization option is actually changing
-        const newKey: 'exterior' | 'interior' = isExterior ? 'exterior' : 'interior';
-        
-        // Check if the customization data itself is changing
-        const customizationChanging = newExterior || newInterior;
-        
-        // If the view type or any option is changing:
-        if (newKey !== currentViewKey || customizationChanging) {
+        const { newExterior, newInterior, newWheels } = options;
+
+        // Check if the view key is changing or if the customization data itself is changing
+        const isViewKeyChanging = newKey !== currentViewKey;
+        const isCustomizationChanging = 
+            (newExterior && newExterior.name !== exteriorColor.name) ||
+            (newInterior && newInterior.name !== interiorColor.name) ||
+            (newWheels && newWheels.name !== wheels.name);
+
+        if (isViewKeyChanging || isCustomizationChanging) {
             
             // 1. Start the fade-out
             setIsFading(true); 
             
-            // 2. Apply the customization changes immediately to state, but the image won't change yet.
+            // 2. Apply the customization changes immediately to state
             if (newExterior) setExteriorColor(newExterior);
             if (newInterior) setInteriorColor(newInterior);
+            if (newWheels) setWheels(newWheels);
+
+            // Calculate target states for image source update
+            const targetExterior = newExterior || exteriorColor;
+            const targetInterior = newInterior || interiorColor;
+            const targetWheels = newWheels || wheels;
             
             // 3. Wait for the fade-out duration
             setTimeout(() => {
-                // 4. Update the image source and view key in the background (opacity is 0)
-                const targetExterior = newExterior || exteriorColor;
-                const targetInterior = newInterior || interiorColor;
-                
-                setDisplayedImageSrc(getDisplayedSource(newKey, targetExterior, targetInterior));
+                // 4. Update the image source and view key in the background
+                setDisplayedImageSrc(getDisplayedSource(newKey, targetExterior, targetInterior, targetWheels));
                 setCurrentViewKey(newKey);
                 
                 // 5. Start the fade-in (remove the fading class)
@@ -230,7 +260,7 @@ const CustomizePage = () => {
     const getWheelButtonClass = (isSelected: boolean): string => {
         const baseClass = 'wheel-button-option';
         if (isSelected) {
-            return `${baseClass} wheel-selected`;
+            return `${baseClass} btn-selected`;
         } else {
             return `${baseClass} wheel-default`;
         }
@@ -265,14 +295,19 @@ const CustomizePage = () => {
             </div>
 
             <main className="main-layout">
-                {/* Image Section: Now uses the new state and logic */}
+                {/* Image Section: Now handles exterior, interior, and wheels views */}
                 <section className="image-section-container">
                     <div className="image-sticky-wrapper">
                         
                         <div className="image-display-box single-view">
                             <img
-                                src={displayedImageSrc} // Use the src that changes after fade-out
-                                alt={`Model Y: ${currentViewKey === 'exterior' ? exteriorColor.name : interiorColor.name}`}
+                                src={displayedImageSrc} 
+                                // Dynamic Alt text based on current view
+                                alt={`Model Y: ${
+                                    currentViewKey === 'exterior' ? exteriorColor.name : 
+                                    currentViewKey === 'interior' ? interiorColor.name : 
+                                    wheels.name
+                                }`}
                                 // Apply 'fading' class to control opacity
                                 className={`car-image-preview ${isFading ? 'fading' : ''} ${currentViewKey}-view`}
                                 id="main-car-image"
@@ -290,15 +325,20 @@ const CustomizePage = () => {
 
                     {/* 1. Exterior Color */}
                     <div className="customization-group" id="exterior-buttons">
-                        <h3 className="group-title">Exterior Color</h3>
+                        <h3 className="group-title">
+                            Exterior Color 
+                            <span className='group-selection-detail'>
+                                {exteriorColor.name} {exteriorColor.price > 0 ? ` (+${formatCurrency(exteriorColor.price)})` : ''}
+                            </span>
+                        </h3>
                         <div className="color-option-list">
                             {COLORS.map((color: CarOption) => (
                                 <button
                                     key={color.name}
                                     className={`${exteriorColor.name === color.name ? 'btn-selected' : ''} color-button-swatch hover-scale`}
                                     onClick={() => {
-                                        // Pass the new color to the handler
-                                        handleViewChange(true, color); 
+                                        // Change color and set view to 'exterior'
+                                        handleViewChange('exterior', { newExterior: color }); 
                                     }}
                                 >
                                     <img
@@ -313,15 +353,20 @@ const CustomizePage = () => {
 
                     {/* 2. Interior Color */}
                     <div className="customization-group" id="interior-buttons">
-                        <h3 className="group-title">Interior Color</h3>
+                        <h3 className="group-title">
+                            Interior Color
+                            <span className='group-selection-detail'>
+                                {interiorColor.name} {interiorColor.price > 0 ? ` (+${formatCurrency(interiorColor.price)})` : ''}
+                            </span>
+                        </h3>
                         <div className="color-option-list">
                             {INTERIORS.map((interior: CarOption) => (
                                 <button
                                     key={interior.name}
                                     className={`${interiorColor.name === interior.name ? 'btn-selected' : ''} color-button-swatch hover-scale`}
                                     onClick={() => {
-                                        // Pass the new interior to the handler
-                                        handleViewChange(false, undefined, interior); 
+                                        // Change interior and set view to 'interior'
+                                        handleViewChange('interior', { newInterior: interior }); 
                                     }}
                                 >
                                     <img 
@@ -334,19 +379,37 @@ const CustomizePage = () => {
                         </div>
                     </div>
 
-                    {/* 3. Wheel Buttons (unchanged state logic, can remain simple) */}
+                    {/* 3. Wheel Buttons (Now shows wheel image on click) */}
                     <div className="customization-group" id="wheel-buttons">
-                        <h3 className="group-title">Wheels</h3>
-                        {WHEELS.map((wheel: WheelOption) => (
-                            <button
-                                key={wheel.name}
-                                className={getWheelButtonClass(wheels.name === wheel.name)}
-                                onClick={() => setWheels(wheel)}
-                            >
-                                {wheel.name}
-                                {wheel.price > 0 && ` (+$${wheel.price.toLocaleString()})`}
-                            </button>
-                        ))}
+                        <h3 className="group-title">
+                            Wheels
+                            <div className='group-selection-detail'>
+                                {wheels.name} {wheels.price > 0 ? ` (+${formatCurrency(wheels.price)})` : ''}
+                            </div>
+                        </h3>
+                        <div className='wheel-option-list'>
+                            {WHEELS.map((wheel: WheelOption) => (
+                                <button
+                                    key={wheel.name}
+                                    className={getWheelButtonClass(wheels.name === wheel.name)}
+                                    onClick={() => {
+                                        // Change wheel and set view to 'wheels'
+                                        handleViewChange('wheels', { newWheels: wheel });
+                                    }}
+                                >
+                                    {/* Using a placeholder image for the button itself if needed, or just text */}
+                                    <div className="wheel-button-content">
+                                        {/*<img 
+                                            src={wheel.image} 
+                                            alt={wheel.name} 
+                                            className="wheel-button-img"
+                                        />*/}
+                                        <span className="wheel-name">{wheel.name}</span>
+                                    </div>
+                                    
+                                </button>
+                            ))}
+                        </div>
                     </div>
 
                     {/* 4. Full Self Driving Option (unchanged) */}

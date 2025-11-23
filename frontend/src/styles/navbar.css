@@ -82,11 +82,12 @@
 }
 
 .nav-account-section {
-    position: static; /* Default to static */
+    position: absolute; /* Default to static */
     margin-left: auto; /* Pushes to the right on desktop nav-menu (before it hides) */
     right: auto; /* Reset right position */
     display: flex; /* For aligning icon/label */
     align-items: center;
+    right: 10%;
 }
 
 /* Style for the button (optional: add a label next to the icon for mobile clarity) */

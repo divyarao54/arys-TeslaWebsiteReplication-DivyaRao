@@ -473,10 +473,15 @@ body {
     .sidebar-container, .main-layout{
         width: 90%;
         left: 0;
-        top: 100px;
+        top: 150px;
         
     }
     .car-image-preview.interior-view{
         transform: translateX(-100px);
+    }
+    .car-image-preview.wheels-view{
+        transform: translateX(-100px);
+        height: 300px;
+        object-fit: cover;
     }
 }
