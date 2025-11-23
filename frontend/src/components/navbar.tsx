@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/navbar.css";
 import TeslaLogo from '../assets/tesla-logo-navbar.png'; 
 import { useAuth } from '../context/UserContext'; // Renamed context import
 import { FaUserCircle } from 'react-icons/fa'; 
 
 const Navbar: React.FC = () => {
-    // Corrected context hook use (assuming you renamed the file/context)
     const { user, logout } = useAuth(); 
     
     const [isMenuActive, setIsMenuActive] = useState(false);
@@ -17,17 +16,14 @@ const Navbar: React.FC = () => {
     };
 
     const closeMenu = () => {
-        // We will now close the popup whenever the main menu closes
         setIsUserPopupOpen(false);
         setIsMenuActive(false);
     };
 
     const handleUserIconClick = () => {
-        // On mobile, the nav-menu is already open. We only toggle the popup.
         if (user.isLoggedIn) {
             setIsUserPopupOpen(!isUserPopupOpen);
         } else {
-            // If redirecting, we should close the menu first for a cleaner transition
             setIsMenuActive(false);
             window.location.href = '/login'; 
         }
@@ -38,7 +34,6 @@ const Navbar: React.FC = () => {
         setIsUserPopupOpen(false);
     }
 
-    // ... (useEffect for scroll lock remains the same) ...
 
     return (
       <div className="header-outer-container">
@@ -60,7 +55,6 @@ const Navbar: React.FC = () => {
                         <a href="/customize" className="nav-link" onClick={closeMenu}>Customize</a>
                     </li>
                     
-                    {/* 🔑 MOVED: Account Section is now a list item within the menu */}
                     <li className="nav-item nav-account-item">
                         <div className="nav-account-section">
                             <button 
@@ -73,13 +67,8 @@ const Navbar: React.FC = () => {
                             </button>
                         </div>
                     </li>
-                    {/* 🔑 MOVED: Place the popup inside the header-outer-container (as it was) 
-                       BUT we will use CSS to position it relative to the icon. 
-                       We will use the existing popup structure but adjust its position in CSS.
-                    */}
                 </ul>
 
-                {/* The Mobile Menu Toggle Button remains outside the nav-menu */}
                 <button 
                     className={`menu ${isMenuActive ? "active" : ""}`} 
                     onClick={toggleMenu}
@@ -88,7 +77,6 @@ const Navbar: React.FC = () => {
                 </button>
             </nav>
         </header>
-        {/* 🔑 POPUP REMAINS HERE for better z-index control outside the nav-menu flow */}
         {user.isLoggedIn && isUserPopupOpen && (
             <div className="user-popup">
                 <div className="user-popup-heading">Account</div>

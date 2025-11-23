@@ -1,4 +1,3 @@
-/* Navbar CSS */
 
 .header {
   width: 100%;
@@ -36,10 +35,6 @@
   transition: all 0.3s ease;
 }
 
-.nav-item {
-
-}
-
 .nav-link {
   text-decoration: none;
   font-size: 1rem;
@@ -55,7 +50,6 @@
   background-color: #f1f1f1;
 }
 
-/* Mobile Styles */
 
 .menu {
   display: none;
@@ -82,15 +76,14 @@
 }
 
 .nav-account-section {
-    position: absolute; /* Default to static */
-    margin-left: auto; /* Pushes to the right on desktop nav-menu (before it hides) */
-    right: auto; /* Reset right position */
-    display: flex; /* For aligning icon/label */
+    position: absolute;
+    margin-left: auto;
+    right: auto;
+    display: flex;
     align-items: center;
     right: 10%;
 }
 
-/* Style for the button (optional: add a label next to the icon for mobile clarity) */
 .nav-user-icon-button {
     background: none;
     border: none;
@@ -99,29 +92,27 @@
     color: #333;
     padding: 7px;
     border-radius: 10px;
-    display: flex; /* To align text and icon */
+    display: flex;
     align-items: center;
-    gap: 8px; /* Space between text and icon */
+    gap: 8px;
     transition: background-color 0.2s;
 }
 
 .user-icon-label {
-    /* Hide label on desktop for minimalist design */
     display: none; 
 }
 
 .user-popup {
-    /* Existing desktop-like fixed positioning for the popup */
     width: 250px;
-    position: absolute; /* Changed from fixed to absolute for better header containment */
-    top: 60px; /* Position below the header */
-    right: 5%; /* Position relative to the header's right edge */
+    position: absolute;
+    top: 60px; 
+    right: 5%; 
     background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 15px;
-    z-index: 101; /* Above the header */
+    z-index: 101; 
 }
 
 @media (max-width: 1200px) {
@@ -188,48 +179,35 @@
   }
 
   .nav-item.nav-account-item {
-        /* Ensure the account item looks like a menu link */
         width: 95%;
         margin-top: 20px;
         padding-left: 20px;
     }
 
     .user-icon-label {
-        /* Show label on mobile */
         display: inline; 
         font-weight: 500;
     }
     
     .nav-account-section {
-        /* Reset positioning within the list item */
         position: static; 
         right: auto;
-        /* Remove margin auto on mobile if it causes alignment issues */
         margin-left: 0; 
     }
 
-    /* 🔑 CRITICAL FIX: Reposition the Popup for Mobile */
     .user-popup {
-        /* Positioning relative to the mobile menu viewport */
-        position: fixed; /* Must be fixed to stay visible above the scroll lock */
-        width: 80%; /* Takes up most of the screen width */
-        top: 200px; /* Adjust height down from the top */
-        right: 10%; /* Center it roughly */
+        position: fixed; 
+        width: 80%; 
+        top: 200px; 
+        right: 10%; 
         left: auto;
         margin: auto;
         z-index: 2000; 
     }
     
-    /* Center the popup better when the mobile menu is active */
-    /* This ensures it appears in the middle of the screen regardless of the icon's position */
     .header-outer-container .user-popup {
-        /* Center horizontally */
         left: 50%;
         transform: translateX(-50%);
     }
 
-    /* Remove previous absolute positioning which was causing issues */
-    .user-popup.active {
-        /* No need for separate active class if hidden/shown by React */
-    }
 }

@@ -102,9 +102,9 @@ Features include Touch-friendly controls
 
 ## Deployment
 
-Frontend: Vercel
-Backend: Due to running out of free credits on Railway, I've chosen not to deploy the backend
-Database: MongoDB Atlas
+- Frontend: Vercel
+- Backend: Due to running out of free credits on Railway, I've chosen not to deploy the backend
+- Database: MongoDB Atlas
 
 # License
 

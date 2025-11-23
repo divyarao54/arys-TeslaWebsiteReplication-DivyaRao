@@ -1,30 +1,23 @@
-/* * BASE STYLES & LAYOUT 
- * Achieves the centered, minimalist look of the Tesla Sign-In page.
- */
+
 
 body {
-    font-family: 'Inter', sans-serif; /* Use a modern, clean font */
-    background-color: #f7f7f7; /* Very light gray background */
+    font-family: 'Inter', sans-serif;
+    background-color: #f7f7f7;
     margin: 0;
     padding: 0;
 }
 
-/* Base style for both login and register pages */
 .login-page, .register-page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px; /* Space for the top header/logo */
+    padding-top: 50px;
     position: relative;
     box-sizing: border-box;
 }
 
-/* * HEADER / LOGO PLACEMENT 
- * Updated to handle both existing login-hero-title and the new register-hero-title structure
- */
 
-/* Style for the old login title text placeholder */
 .login-hero-title {
     position: absolute;
     top: 25px;
@@ -35,7 +28,6 @@ body {
     color: #171a20;
 }
 
-/* Style for the new register logo container */
 .register-hero-title {
     position: absolute;
     top: 25px;
@@ -46,13 +38,10 @@ body {
     width: 120px;
 }
 
-/* * LOGIN/REGISTER CONTAINER (The main center box) 
- * Using generic styling for the main form wrapper
- */
 
 .login-container, .register-container {
     width: 100%;
-    max-width: 380px; /* Width similar to the reference image */
+    max-width: 380px;
     margin-top: 50px;
     padding: 20px;
     box-sizing: border-box;
@@ -61,18 +50,14 @@ body {
     align-items: center;
 }
 
-/* Title for Login/Register Pages */
 .login-title, .register-title {
     font-size: 2.5rem;
     font-weight: 700;
     color: #171a20;
     margin-bottom: 20px;
-    align-self: flex-start; /* Align title to the left */
+    align-self: flex-start; 
 }
 
-/* * FORM GROUP & INPUTS 
- * These styles apply to both login and register forms
- */
 
 .login-form, .register-form {
     width: 100%;
@@ -82,7 +67,6 @@ body {
     margin-bottom: 5px;
 }
 
-/* Label styles apply to all labels in both forms */
 .email-label, .password-label, .register-name-label, .register-email-label, .register-password-label {
     display: block;
     text-align: left;
@@ -93,7 +77,6 @@ body {
     padding-left: 20px;
 }
 
-/* Input styles apply to all inputs in both forms */
 input[type="email"], 
 input[type="password"],
 input[type="text"] {
@@ -102,7 +85,7 @@ input[type="text"] {
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 8px;
-    background-color: #f4f4f4; /* Light gray background */
+    background-color: #f4f4f4; 
     box-shadow: none;
     font-size: 1rem;
     color: #333;
@@ -118,15 +101,13 @@ input[type="text"]:focus {
     outline: none;
 }
 
-/* * PRIMARY BUTTON (Login/Register Button) 
- * Using specific class names for the blue primary button
- */
+
 
 .login-btn, .register-btn {
     width: 100%;
     padding: 12px 0;
     margin-top: 15px;
-    background-color: #3b82f6; /* Light blue color from reference image */
+    background-color: #3b82f6; 
     color: white;
     border: none;
     border-radius: 8px;
@@ -145,8 +126,7 @@ input[type="text"]:focus {
     cursor: not-allowed;
 }
 
-/* * ERROR MESSAGE 
- */
+
 
 p {
     text-align: center;
@@ -154,8 +134,7 @@ p {
     font-size: 0.9rem;
 }
 
-/* * SEPARATOR & SECONDARY LINKS 
- */
+
 
 .separator {
     display: flex;
@@ -180,14 +159,13 @@ p {
     margin-left: .5em;
 }
 
-/* Link styled as the secondary "Create Account" button (Login Page) */
 .register-link {
     display: block;
     width: 100%;
     padding: 10px 0;
     margin-top: 20px;
     text-align: center;
-    background-color: #f4f4f4; /* Same as input background */
+    background-color: #f4f4f4;
     color: #333;
     border: none;
     border-radius: 8px;
@@ -201,14 +179,13 @@ p {
     background-color: #e8e8e8;
 }
 
-/* Link styled as the secondary "Login here" button (Register Page) */
 .login-link {
     display: block;
     width: 100%;
     padding: 10px 0;
     margin-top: 20px;
     text-align: center;
-    background-color: #f4f4f4; /* Same as input background */
+    background-color: #f4f4f4;
     color: #333;
     border: none;
     border-radius: 8px;
@@ -223,8 +200,6 @@ p {
 }
 
 
-/* * FOOTER (Optional - not in user's HTML, but good for completeness)
- */
 
 .footer-links {
     position: absolute;
@@ -235,8 +210,6 @@ p {
     color: #5c5e62;
 }
 
-/* * MOBILE RESPONSIVENESS 
- */
 
 @media (max-width: 600px) {
     .login-hero-title, .register-hero-title {

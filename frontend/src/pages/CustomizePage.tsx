@@ -1,8 +1,7 @@
 import '../styles/customize.css';
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Navbar from '../components/navbar';
 
-// --- IMAGE IMPORTS ---
 import logo from "../assets/images/logo.svg";
 import exteriorImageDefault from "../assets/images/model-y-stealth-grey.jpg";
 import interiorImageDark from "../assets/images/model-y-interior-dark.jpg";
@@ -31,7 +30,7 @@ const DYNAMIC_IMAGE_PATHS = {
     logo: logo,
     exteriorImageDefault: exteriorImageDefault,
     interiorImageDark: interiorImageDark,
-    interiorImageLight: interiorImageLight, // Fixed: This was missing previously
+    interiorImageLight: interiorImageLight, 
     wheel1: wheel1,
     wheel2: wheel2,
     
@@ -54,7 +53,6 @@ const DYNAMIC_IMAGE_PATHS = {
     buttonLight: buttonLight,
 };
 
-// --- TypeScript Interfaces ---
 interface CarOption {
     name: string;
     price: number;
@@ -67,7 +65,7 @@ interface WheelOption {
     name: string;
     price: number;
     key: 'standard' | 'performance';
-    image: string; // Added image property
+    image: string;
 }
 
 interface Accessory {
@@ -84,7 +82,6 @@ interface AccessoriesState {
 
 type ViewKey = 'exterior' | 'interior' | 'wheels';
 
-// --- Configuration Data ---
 const BASE_PRICE: number = 47490;
 const FSD_PRICE: number = 8500;
 const PERFORMANCE_PRICE: number = 5000;
@@ -107,7 +104,6 @@ const INTERIORS: CarOption[] = [
 ];
 
 const WHEELS: WheelOption[] = [
-    // Added image paths for the wheel options
     { name: 'Standard Wheels', price: 0, key: 'standard', image: DYNAMIC_IMAGE_PATHS.wheel1 },
     { name: 'Performance Wheels', price: 2500, key: 'performance', image: DYNAMIC_IMAGE_PATHS.wheel2 },
 ];
@@ -118,7 +114,6 @@ const ACCESSORIES: Accessory[] = [
     { name: 'All-Weather Interior Liners', price: 225, key: 'liners' },
 ];
 
-// Utility for formatting currency
 const formatCurrency = (amount: number): string => {
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -128,9 +123,7 @@ const formatCurrency = (amount: number): string => {
     }).format(amount);
 };
 
-// --- Main App Component ---
 const CustomizePage = () => {
-    // State Initialization
     const [exteriorColor, setExteriorColor] = useState<CarOption>(COLORS[0]);
     const [interiorColor, setInteriorColor] = useState<CarOption>(INTERIORS[0]);
     const [wheels, setWheels] = useState<WheelOption>(WHEELS[0]);
@@ -142,12 +135,9 @@ const CustomizePage = () => {
         liners: false,
     });
     
-    // Custom Modal State
     const [showModal, setShowModal] = useState<boolean>(false);
 
-    // --- NEW STATE FOR IMAGE TRANSITION ---
     const [isFading, setIsFading] = useState<boolean>(false);
-    // Updated type to include 'wheels'
     const [currentViewKey, setCurrentViewKey] = useState<ViewKey>('exterior'); 
 
     const TRANSITION_DURATION_MS = 300; 
@@ -167,17 +157,14 @@ const CustomizePage = () => {
             case 'wheels':
                 return wheels.image;
             default:
-                // Fallback to exterior
                 return exterior.mainImage; 
         }
     };
     
-    // Initialize displayed image source with the correct initial state
     const [displayedImageSrc, setDisplayedImageSrc] = useState<string>(
         getDisplayedSource('exterior', COLORS[0], INTERIORS[0], WHEELS[0])
     );
 
-    // --- NEW REFACTORED HANDLER FOR IMAGE TRANSITION ---
     const handleViewChange = (
         newKey: ViewKey,
         options: {
@@ -188,7 +175,6 @@ const CustomizePage = () => {
     ) => {
         const { newExterior, newInterior, newWheels } = options;
 
-        // Check if the view key is changing or if the customization data itself is changing
         const isViewKeyChanging = newKey !== currentViewKey;
         const isCustomizationChanging = 
             (newExterior && newExterior.name !== exteriorColor.name) ||
@@ -197,33 +183,25 @@ const CustomizePage = () => {
 
         if (isViewKeyChanging || isCustomizationChanging) {
             
-            // 1. Start the fade-out
             setIsFading(true); 
             
-            // 2. Apply the customization changes immediately to state
             if (newExterior) setExteriorColor(newExterior);
             if (newInterior) setInteriorColor(newInterior);
             if (newWheels) setWheels(newWheels);
 
-            // Calculate target states for image source update
             const targetExterior = newExterior || exteriorColor;
             const targetInterior = newInterior || interiorColor;
             const targetWheels = newWheels || wheels;
             
-            // 3. Wait for the fade-out duration
             setTimeout(() => {
-                // 4. Update the image source and view key in the background
                 setDisplayedImageSrc(getDisplayedSource(newKey, targetExterior, targetInterior, targetWheels));
                 setCurrentViewKey(newKey);
                 
-                // 5. Start the fade-in (remove the fading class)
                 setIsFading(false);
             }, TRANSITION_DURATION_MS); 
         }
     };
-    // ----------------------------------------
 
-    // Dynamic Price Calculation (unchanged)
     const totalPrice = useMemo((): number => {
         let price: number = BASE_PRICE;
         price += exteriorColor.price;
@@ -237,7 +215,6 @@ const CustomizePage = () => {
         return price;
     }, [exteriorColor, interiorColor, wheels, fsd, performancePackage, accessories]);
 
-    // Estimated Monthly Payment Calculation (unchanged)
     const calculateMonthlyPayment = (total: number): string => {
         const loanAmount: number = total - DOWN_PAYMENT;
         if (loanAmount <= 0) return '0.00';
@@ -251,12 +228,10 @@ const CustomizePage = () => {
 
     const monthlyPayment: string = calculateMonthlyPayment(totalPrice);
 
-    // Handlers (unchanged)
     const handleAccessoryChange = (key: keyof AccessoriesState) => {
         setAccessories(prev => ({ ...prev, [key]: !prev[key] }));
     };
     
-    // Determine wheel button classes (unchanged)
     const getWheelButtonClass = (isSelected: boolean): string => {
         const baseClass = 'wheel-button-option';
         if (isSelected) {
@@ -269,7 +244,6 @@ const CustomizePage = () => {
 
     return (
         <>
-            {/* Confirmation Modal (unchanged) */}
             {showModal && (
                 <div className="modal-overlay">
                     <div className="modal-content">
@@ -289,26 +263,22 @@ const CustomizePage = () => {
                 </div>
             )}
 
-            {/* Navbar component (unchanged) */}
             <div className='customize-header'>
                 <Navbar/>
             </div>
 
             <main className="main-layout">
-                {/* Image Section: Now handles exterior, interior, and wheels views */}
                 <section className="image-section-container">
                     <div className="image-sticky-wrapper">
                         
                         <div className="image-display-box single-view">
                             <img
                                 src={displayedImageSrc} 
-                                // Dynamic Alt text based on current view
                                 alt={`Model Y: ${
                                     currentViewKey === 'exterior' ? exteriorColor.name : 
                                     currentViewKey === 'interior' ? interiorColor.name : 
                                     wheels.name
                                 }`}
-                                // Apply 'fading' class to control opacity
                                 className={`car-image-preview ${isFading ? 'fading' : ''} ${currentViewKey}-view`}
                                 id="main-car-image"
                             />
@@ -318,12 +288,10 @@ const CustomizePage = () => {
                     </div>
                 </section>
 
-                {/* Sidebar */}
                 <aside className="sidebar-container">
                     <h1 className="model-title">Model Y</h1>
                     <h2 className="customize-subtitle">Customize Your Car</h2>
 
-                    {/* 1. Exterior Color */}
                     <div className="customization-group" id="exterior-buttons">
                         <h3 className="group-title">
                             Exterior Color 
@@ -337,7 +305,6 @@ const CustomizePage = () => {
                                     key={color.name}
                                     className={`${exteriorColor.name === color.name ? 'btn-selected' : ''} color-button-swatch hover-scale`}
                                     onClick={() => {
-                                        // Change color and set view to 'exterior'
                                         handleViewChange('exterior', { newExterior: color }); 
                                     }}
                                 >
@@ -351,7 +318,6 @@ const CustomizePage = () => {
                         </div>
                     </div>
 
-                    {/* 2. Interior Color */}
                     <div className="customization-group" id="interior-buttons">
                         <h3 className="group-title">
                             Interior Color
@@ -365,7 +331,6 @@ const CustomizePage = () => {
                                     key={interior.name}
                                     className={`${interiorColor.name === interior.name ? 'btn-selected' : ''} color-button-swatch hover-scale`}
                                     onClick={() => {
-                                        // Change interior and set view to 'interior'
                                         handleViewChange('interior', { newInterior: interior }); 
                                     }}
                                 >
@@ -379,7 +344,6 @@ const CustomizePage = () => {
                         </div>
                     </div>
 
-                    {/* 3. Wheel Buttons (Now shows wheel image on click) */}
                     <div className="customization-group" id="wheel-buttons">
                         <h3 className="group-title">
                             Wheels
@@ -393,17 +357,10 @@ const CustomizePage = () => {
                                     key={wheel.name}
                                     className={getWheelButtonClass(wheels.name === wheel.name)}
                                     onClick={() => {
-                                        // Change wheel and set view to 'wheels'
                                         handleViewChange('wheels', { newWheels: wheel });
                                     }}
                                 >
-                                    {/* Using a placeholder image for the button itself if needed, or just text */}
                                     <div className="wheel-button-content">
-                                        {/*<img 
-                                            src={wheel.image} 
-                                            alt={wheel.name} 
-                                            className="wheel-button-img"
-                                        />*/}
                                         <span className="wheel-name">{wheel.name}</span>
                                     </div>
                                     
@@ -412,7 +369,6 @@ const CustomizePage = () => {
                         </div>
                     </div>
 
-                    {/* 4. Full Self Driving Option (unchanged) */}
                     <div className="option-card-wrapper">
                         <h3 className="group-title">Full Self-Driving</h3>
                         <label className="checkbox-label-container">
@@ -427,7 +383,6 @@ const CustomizePage = () => {
                         </label>
                     </div>
 
-                    {/* 5. Performance Upgrade (unchanged) */}
                     <div className="customization-group">
                         <h3 className="group-title">Performance Package</h3>
                         <button
@@ -440,7 +395,6 @@ const CustomizePage = () => {
                         </button>
                     </div>
 
-                    {/* 6. Accessories Checkboxes (fixed container issue) */}
                     <div className="customization-group">
                         <h3 className="group-title">Accessories</h3>
                         <div className="accessory-list-container">
@@ -466,13 +420,11 @@ const CustomizePage = () => {
                         </div>
                     </div>
 
-                    {/* Total Price Section (unchanged) */}
                     <div className="total-price-section">
                         <h3 className="section-title">Total Price</h3>
                         <p id="total-price" className="final-price">{formatCurrency(totalPrice)}</p>
                     </div>
 
-                    {/* Payment Breakdown (unchanged) */}
                     <div className="payment-breakdown-section">
                         <h3 className="section-title">Estimated Payment Breakdown</h3>
                         <div className="payment-details-list">

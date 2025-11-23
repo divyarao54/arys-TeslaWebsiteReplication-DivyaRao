@@ -1,10 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import axios from 'axios';
 
-// ⚠️ IMPORTANT: Set your backend API base URL
 const API_URL = 'http://localhost:5000/api/auth'; 
 
-// --- TypeScript Interfaces ---
 
 interface UserState {
     _id?: string;
@@ -14,7 +12,6 @@ interface UserState {
     isLoggedIn: boolean;
 }
 
-// Renamed Context Interface
 interface AuthContextType {
     user: UserState;
     loading: boolean;
@@ -23,11 +20,9 @@ interface AuthContextType {
     fetchUserProfile: () => Promise<void>;
 }
 
-// Renamed Context Object
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// --- Custom Hook (Renamed Export) ---
-export const useAuth = () => { // 🔑 Hook renamed to useAuth
+export const useAuth = () => { 
     const context = useContext(AuthContext);
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider');
@@ -35,14 +30,12 @@ export const useAuth = () => { // 🔑 Hook renamed to useAuth
     return context;
 };
 
-// --- Provider Component (Renamed Export) ---
 
-interface AuthProviderProps { // Interface renamed
+interface AuthProviderProps { 
     children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { // 🔑 Component renamed to AuthProvider
-    // Load initial state from localStorage if available
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { 
     const [user, setUser] = useState<UserState>(() => {
         const userData = localStorage.getItem('userInfo');
         try {
@@ -55,7 +48,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { // 
     });
     const [loading, setLoading] = useState(true);
 
-    // Helper function for authorization headers
     const getAuthHeaders = () => {
         const token = user.token;
         return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
@@ -76,11 +68,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { // 
     const logout = () => {
         setUser({ isLoggedIn: false });
         localStorage.removeItem('userInfo');
-        // ⚠️ You'll want to add redirection here after implementing your router
     };
 
     const fetchUserProfile = async () => {
-        // ❌ Removed redundant log
         if (!user.token) {
             setLoading(false);
             return;
@@ -91,7 +81,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { // 
             const { data } = await axios.get(`${API_URL}/profile`, getAuthHeaders());
             console.log("AuthContext: Profile fetch SUCCESS. User:", data.name);
             
-            // Update state with confirmed data from the server
             setUser(prev => ({
                 ...prev,
                 name: data.name,
@@ -108,7 +97,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { // 
         }
     };
 
-    // Verify token and fetch profile on mount
     useEffect(() => {
         fetchUserProfile();
     }, []);
@@ -121,7 +109,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => { // 
         fetchUserProfile,
     };
 
-    // Show a loading screen while authentication is being verified
     return (
         <AuthContext.Provider value={contextValue}>
              {loading ? <div>Verifying Session...</div> : children}
