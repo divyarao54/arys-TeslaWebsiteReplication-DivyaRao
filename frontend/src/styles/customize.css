@@ -1,0 +1,482 @@
+/* --- Base and Global Styles --- */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+body { 
+    font-family: 'Montserrat', sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background-color: #fff; 
+}
+
+/* --- Layout Components --- */
+.image-section-container{
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.image-display-box{
+    background-color: #ffffff;
+}
+
+.top-bar { 
+    background-color: #e5e7eb; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    padding: 8px 0; 
+    z-index: 50; 
+}
+.top-bar-text {
+    text-align: center; 
+    padding: 8px 0; 
+    font-weight: 600;
+}
+
+.header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 40px; 
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+.header-logo { 
+    font-size: 2rem; 
+    font-weight: bold; 
+}
+.header-button {
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    padding: 8px 12px; 
+    border: 1px solid #d1d5db; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    background: #ffffff;
+}
+.header-button-text {
+    font-weight: bold;
+}
+
+.main-content { 
+    display: flex; 
+    flex-direction: column; 
+    padding: 24px 16px; 
+    max-width: 1400px; 
+    margin: 0 auto; 
+}
+
+
+.sidebar-container, .main-layout{
+    width: 450px;
+    position: absolute;
+    right: 0%;
+    top: 27px;
+    z-index: 10;
+    background-color: rgb(251, 251, 251);
+    padding: 25px;
+
+}
+
+.image-display-box{
+    background-color: #fff;
+}
+
+/* Must include opacity in the transition property */
+.car-image-preview {
+    width: 100%;
+    /* Set the duration and timing function for opacity change */
+    transition: opacity 0.7s ease-in-out; 
+    opacity: 1; /* Default state: fully visible */
+}
+
+/* This class is applied when isFading is TRUE */
+.car-image-preview.fading {
+    opacity: 0; /* Fades out the current image */
+}
+
+/* Keep your existing translate transforms if you still want the sliding effect */
+.car-image-preview.exterior-view {
+    /* Example slide position */
+    transform: translateX(-150px); 
+}
+
+.car-image-preview.interior-view {
+    /* Example reset position */
+    transform: translateX(0); 
+}
+
+.color-button-swatch{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-button-img-exterior, .color-button-img-interior{
+    width: 400%;
+}
+
+.color-option-list{
+    display: block;
+
+}
+
+/* --- Car Preview Images --- */
+.car-image { 
+    height: 384px; 
+    background-color: #d1d5db; 
+    display: flex; 
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden; 
+    margin-bottom: 16px; 
+    border-radius: 12px; 
+    transition: background-color 0.5s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.car-image h1 { 
+    color: #fff; 
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); 
+    font-size: 2.5rem; 
+    text-align: center;
+}
+.car-image p { 
+    color: #fff; 
+    font-weight: 300; 
+}
+
+/* Specific styling for the interior preview text */
+.interior-dark-text { 
+    color: #f9fafb !important;
+}
+.interior-dark-subtext {
+    color: #d1d5db !important;
+}
+.interior-light-text { 
+    color: #1f2937 !important;
+}
+.interior-light-subtext {
+    color: #4b5563 !important;
+}
+
+/* --- Sidebar Components --- */
+.sidebar-h1 {
+    font-size: 3rem; 
+    text-align: center; 
+    font-weight: bold; 
+    margin-bottom: 20px;
+}
+.sidebar-h2 {
+    font-size: 1.25rem; 
+    text-align: center; 
+    font-weight: 300;
+}
+
+.customization-option { 
+    margin-bottom: 32px; 
+}
+.option-title { 
+    font-weight: 600; 
+    margin-bottom: 8px; 
+}
+.option-details {
+    margin-top: 16px; 
+    font-size: 1rem; 
+    font-weight: 600;
+}
+
+/* --- Color Buttons --- */
+.color-buttons { 
+    display: flex; 
+    gap: 16px; 
+    flex-wrap: wrap; 
+}
+.color-button { 
+    border: 3px solid transparent; 
+    border-radius: 50%; 
+    padding: 4px; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.color-button.selected { 
+    border-color: #cc0000; 
+    box-shadow: 0 0 8px rgba(204, 0, 0, 0.5); 
+}
+.color-swatch { 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    border: 1px solid #d1d5db; 
+    display: block; 
+}
+.interior-swatch-wrapper {
+    padding: 2px; 
+    width: 36px; 
+    height: 36px;
+}
+.interior-swatch {
+    width: 30px; 
+    height: 30px;
+}
+
+/* --- Wheel/Package Buttons --- */
+.wheel-button { 
+    width: 100%; 
+    padding: 16px; 
+    margin-bottom: 8px; 
+    border-radius: 8px; 
+    transition: all 0.2s ease; 
+    border: 2px solid #e5e7eb; 
+    cursor: pointer;
+    background-color: #ffffff;
+    text-align: left;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.wheel-button:hover { 
+    background-color: #f9fafb; 
+}
+.wheel-button.selected { 
+    border-color: #1c9bf0; 
+    border-width: 3px; 
+    background-color: #e3f2fd; 
+}
+.wheel-price {
+    font-weight: bold;
+}
+
+.performance-button.selected {
+    background-color: #e3f2fd;
+    border-color: #1c9bf0;
+    border-width: 3px;
+}
+.performance-button-default {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+    border-width: 2px;
+}
+
+/* --- Checkbox Options --- */
+.option-card { 
+    border: 1px solid #d1d5db; 
+    padding: 16px; 
+    margin-bottom: 32px; 
+    border-radius: 8px; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+}
+.checkbox-label { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    cursor: pointer; 
+}
+.checkbox-option-text {
+    flex-grow: 1;
+}
+
+.accessory-label { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 16px; 
+    border: 1px solid #e5e7eb; 
+    border-radius: 8px; 
+    margin-top: 8px; 
+    cursor: pointer; 
+    transition: background-color 0.2s;
+}
+.accessory-label:hover { 
+    background-color: #f9fafb; 
+}
+.accessory-label.selected {
+    background-color: #f1f8e9;
+    border-color: #689f38;
+}
+
+.checkbox-label-container{
+    border: 2px solid #999;
+    padding: 10px;
+    text-align: left;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.accessory-item-label-container{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #999;
+    padding: 10px;
+    text-align: left;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.accessory-item-label{
+    width: 100%;
+    position: relative;
+}
+
+.accessory-form-checkbox-input, .form-checkbox-input { 
+    width: 20px; 
+    height: 20px; 
+    accent-color: #555; 
+    background-color: #999;
+    transform: translateY(3px);
+    margin-right: 10px;
+}
+
+.accessory-price-section{
+    position: absolute;
+    right: 0;
+}
+
+/* --- Price and Payment --- */
+.price-section { 
+    padding-top: 16px; 
+    border-top: 1px solid #d1d5db; 
+    margin-top: 16px; 
+}
+.price-title { 
+    font-weight: 600; 
+    font-size: 1.125rem; 
+}
+.total-price-value { 
+    font-size: 2rem; 
+    font-weight: bold; 
+}
+
+.payment-section { 
+    border-top: 1px solid #d1d5db; 
+    padding-top: 16px; 
+    margin-top: 24px; 
+}
+.payment-breakdown-list { 
+    line-height: 1.8; 
+}
+.payment-detail {
+    font-weight: bold; 
+    margin-left: 8px;
+}
+.monthly-payment-value { 
+    font-weight: bold; 
+    font-size: 1.5rem; 
+    display: block; 
+    margin-top: 16px;
+}
+
+.continue-button {
+    width: 100%;
+    background-color: #1c9bf0;
+    color: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.25rem;
+    margin-top: 32px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Modal Styles --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+.modal-title { 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    margin-bottom: 15px; 
+}
+.modal-price { 
+    font-weight: bold; 
+    display: block; 
+    font-size: 1.25rem; 
+}
+.modal-payment-line {
+    margin-top: 10px;
+}
+.modal-button {
+    background-color: #1c9bf0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.customize-header{
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+}
+
+/* Responsive Layout */
+@media (max-width: 1200px) {
+    .main-content { 
+        flex-direction: row; 
+        padding: 24px 40px; 
+    }
+    .image-section { 
+        width: 65%; 
+    }
+    .sidebar { 
+        width: 35%; 
+        padding-left: 32px; 
+        margin-top: 0; 
+    }
+    .image-wrapper { 
+        position: sticky; 
+        top: 96px; 
+    }
+    .image-section-container{
+        z-index: 100;
+        width: 110%;
+        transform: translateX(100px);
+    }
+    .sidebar-container, .main-layout{
+        width: 90%;
+        left: 0;
+        top: 100px;
+        
+    }
+    .car-image-preview.interior-view{
+        transform: translateX(-100px);
+    }
+}

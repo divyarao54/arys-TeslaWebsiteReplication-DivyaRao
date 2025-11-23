@@ -1,0 +1,388 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
+.home-container{
+    width: 100%; 
+    overflow-x: hidden;
+    
+}
+
+.navbar-container{
+    z-index: 9999;
+    position: relative;
+}
+
+.hero-container, .car-carousel-container{
+    margin-bottom: 60px;
+}
+
+.hero-img-container{
+    width: 100%;
+    overflow: hidden;;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.car-carousel-item, .hero-section, .item-carousel-item{
+    position: relative;
+    margin-right: 10px;
+    height: 100%;
+}
+
+.car-carousel-img-container, .item-carousel-img-container{
+    width: 99%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+}
+
+.hero-img, .car-carousel-img, .item-carousel-img{
+    width: 100%;
+    position: absolute;
+}
+
+.car-carousel-text-1{
+    position: absolute;
+    padding: 10px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.hero-text{
+    z-index: 10;
+    color: #ffffff;
+    height: 27vw;
+    width: 100%;
+    padding: 150px 0 90px 0;
+}
+
+.car-carousel-text{
+    color: #ffffff;
+    height: 18vw;
+    width: 100%;
+    text-align: left;
+    padding: 250px 0 0 10px;
+}
+
+.item-carousel-text{
+    color: #ffffff;
+    height: 18vw;
+    width: 100%;
+    text-align: left;
+    padding: 290px 0 0 10px;
+}
+
+.hero-name, .car-carousel-name, .item-carousel-name{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.hero-buttons{
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.car-carousel-buttons, .item-carousel-buttons, .network-button-container{
+    display: flex;
+    gap: 10px;
+}
+
+.hero-button, .car-carousel-button, .item-carousel-button, .offer-button, .feature-button, .network-button{
+    width: 200px;
+    border-radius: 5px;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.hero-button:hover, .car-carousel-button:hover, .item-carousel-button:hover, .offer-button:hover, .feature-button:hover, .network-button:hover{
+    border: none;
+}
+
+.var-1{
+    background-color: #4169E1;
+    color: #ffffff;
+}
+
+.var-1:hover{
+    background-color: #3455b8;
+}
+
+.var-2:hover{
+    background-color: #e7e7e7;
+}
+
+.var-3{
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.hero-lease-text, .car-carousel-lease-text, .item-carousel-lease-text{
+    line-height: 20px;
+    padding-bottom: 10px;
+}
+
+.footer-container{
+    margin-top: 50px;
+}
+
+.slick-arrow.slick-prev{
+    z-index: 99;
+    margin-left: 50px;
+}
+
+.slick-arrow.slick-next{
+    margin-right: 50px;
+}
+
+.offers{
+    display: flex;
+    gap: 30px;
+    margin: 50px 0;
+    justify-content: center;
+}
+
+.offer-container{
+    display: flex;
+    justify-content: space-between;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.offer-img-container{
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.offer-img{
+    width: 100%;
+}
+
+.offer-text{
+    padding: 15px 0 0 20px;
+    width: 450px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.offer-heading{
+    font-size: 40px;
+    font-weight: 600;
+}
+
+.feature-section{
+    display: flex;
+    padding: 30px;
+    gap: 10px;
+}
+
+.self-driving-feature{
+    width: 65%;
+    position: relative;
+}
+
+.standard-feature{
+    width: 35%;
+    position: relative;
+}
+
+.video-container, .feature-img-container{
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 10px;
+    z-index: 0;
+}
+
+.feature-video-text, .feature-text{
+    width: 100%;
+    height: 200px;
+    position: relative;
+    z-index: 10;
+    text-align: left;
+    padding: 400px 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.feature-text{
+    padding: 335px 0 0 20px;
+}
+
+.feature-heading{
+    font-size: 40px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.feature-video, .feature-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.feature-buttons{
+    display: flex;
+    gap: 10px;
+}
+
+.map-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.network-section{
+    text-align: left;
+    padding: 25px 80px;
+}
+
+.network-text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.network-text-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.network-title{
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.network-numbers{
+    display: flex;
+    gap: 50px;
+}
+
+.network-number{
+    display: flex;
+    flex-direction: column;
+}
+
+.network-group{
+    display: flex;
+    gap: 5px;
+}
+
+.number{
+    font-size: 55px;
+    font-weight: 600;
+}
+
+.number-icon{
+    width: 50px;
+}
+
+@media screen and (max-width: 1200px){
+    .car-carousel-text, .item-carousel-text{
+        padding: 100px 0 0 10px;
+    }
+    .offers{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .offer-container{
+        flex-direction: column-reverse;
+        width: min(500px, 95%);
+        padding: 0%;
+    }
+    .offer-img-container{
+        width: 100%;
+        padding: 0%;
+    }
+    .offer-img{
+        transform: translateY(-75px);
+    }
+    .offer-text{
+        padding: 10px 0 20px 20px;
+        max-width: 90%;
+    }
+    .network-text-container{
+        flex-direction: column;
+    }
+    .network-section{
+        padding-left: 20px;
+    }
+    .network-title, .number{
+        font-size: 35px;
+    }
+    .number-icon{
+        width: 25px;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .hero-text{
+        height: 70vw;
+    }
+
+    .car-carousel-text, .item-carousel-text{
+        height: 80vw;
+    }
+
+    .hero-name, .car-carousel-name, .item-carousel-name{
+        font-size: 40px;
+    }
+
+    .hero-img, .car-carousel-img, .item-carousel-img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .hero-img-container, .car-carousel-img-container, .item-carousel-img-container{
+        width: 99%;
+    }
+
+    .hero-button{
+        width: 150px;
+        font-size: 14px;
+    }
+    .car-carousel-button, .item-carousel-button{
+        width: 120px;
+        font-size: 14px;
+    }
+    .slick-list{
+        width: 110%;
+    }
+
+    .slick-arrow.slick-prev{
+        margin-left: 40px;
+        z-index: 99;
+    }
+
+    .feature-section{
+        flex-direction: column;
+    }
+    .standard-feature, .self-driving-feature{
+        height: 600px;
+        overflow: hidden;
+        width: 100%;
+    }
+    .feature-text, .feature-video-text{
+        width: 95%;
+    }
+    
+}

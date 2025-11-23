@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
+import CustomizePage from './pages/CustomizePage';
+import HomePage from './pages/HomePage';
+import Login from './pages/LoginPage';
+import ProductsPage from './pages/ProductsPage';
+import Register from './pages/RegisterPage';
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { AuthProvider } from './context/UserContext'; // <--- 🔑 NEW IMPORT
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // 1. Wrap the entire application with the UserProvider
+    <AuthProvider> 
+      <Router>  
+        <div className="App">
+          {/* 2. The Navbar component should be placed here (outside <Routes>) 
+               so it appears on every page.
+          */}
+          {/* <Navbar /> */} 
+
+          <Routes>
+            {/* These pages will now have access to the user context */}
+            <Route path="/login" element={<Login />}/> 
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/customize" element={<CustomizePage/>}/>
+            <Route path='/products' element={<ProductsPage/>}/>
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
