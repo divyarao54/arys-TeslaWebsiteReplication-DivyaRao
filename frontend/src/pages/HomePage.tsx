@@ -1,5 +1,3 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom'
 import Navbar from '../components/navbar';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
