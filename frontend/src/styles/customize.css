@@ -118,7 +118,11 @@ body {
 
 .color-option-list{
     display: block;
+    border: none;
+}
 
+.color-option-list:active{
+    border: 1px solid #1D374A;
 }
 
 .car-image { 
@@ -260,6 +264,9 @@ body {
     background-color: #ffffff;
     border-color: #e5e7eb;
     border-width: 2px;
+}
+.wheel-button-option{
+    margin-right: 10px;
 }
 
 /* --- Checkbox Options --- */

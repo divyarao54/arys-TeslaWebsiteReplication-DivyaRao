@@ -355,7 +355,7 @@ const CustomizePage = () => {
                             {WHEELS.map((wheel: WheelOption) => (
                                 <button
                                     key={wheel.name}
-                                    className={getWheelButtonClass(wheels.name === wheel.name)}
+                                    className={`${getWheelButtonClass(wheels.name === wheel.name)} var-2`}
                                     onClick={() => {
                                         handleViewChange('wheels', { newWheels: wheel });
                                     }}
